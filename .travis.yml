@@ -1,0 +1,11 @@
+language: java
+jdk:
+  - openjdk17  # Specifica la versione di JDK (puoi usare openjdk11, openjdk8, ecc.)
+
+# Esegui il build usando Maven
+script: mvn clean install
+
+# Caching per velocizzare le build
+cache:
+  directories:
+    - $HOME/.m2  # Cache della directory locale di Maven
