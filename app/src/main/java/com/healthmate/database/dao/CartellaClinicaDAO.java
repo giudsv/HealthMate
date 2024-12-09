@@ -19,4 +19,7 @@ public interface CartellaClinicaDAO {
 
     @Query("SELECT * FROM referto")
     List<Referto> getAll();
+
+    @Query("SELECT * FROM REFERTO WHERE paziente_id = :pazienteId")
+    List<Referto> getAllByPazienteId(int pazienteId);
 }
