@@ -42,7 +42,7 @@ public class Referto {
 
     @Override
     public String toString() {
-        return "RefertoBean{" +
+        return "Referto{" +
                 "nome='" + nome + '\'' +
                 ", descrizione='" + descrizione + '\'' +
                 ", allegato='" + allegato + '\'' +
@@ -53,8 +53,8 @@ public class Referto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RefertoBean RefertoBean = (RefertoBean) o;
-        return Objects.equals(nome, RefertoBean.nome) && Objects.equals(descrizione, RefertoBean.descrizione) && Objects.equals(allegato, RefertoBean.allegato);
+        Referto Referto = (Referto) o;
+        return Objects.equals(nome, Referto.nome) && Objects.equals(descrizione, Referto.descrizione) && Objects.equals(allegato, Referto.allegato);
     }
 
     @Override

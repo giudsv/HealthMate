@@ -10,9 +10,9 @@ import com.healthmate.database.bean.Referto;
 import java.util.List;
 
 @Dao
-public interface RefertoDAO {
+public interface CartellaClinicaDAO {
     @Insert
-    void insertAll(Referto... refertos);
+    void insertAll(Referto...r);
 
     @Delete
     void delete(Referto referto);
