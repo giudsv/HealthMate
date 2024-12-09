@@ -1,4 +1,4 @@
-package com.healthmate.ui.home;
+package com.healthmate.view.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

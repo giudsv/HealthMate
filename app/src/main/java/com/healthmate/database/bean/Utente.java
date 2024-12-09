@@ -1,4 +1,4 @@
-package com.healthmate.database.entities;
+package com.healthmate.database.bean;
 
 import androidx.room.ColumnInfo;
 import androidx.room.PrimaryKey;

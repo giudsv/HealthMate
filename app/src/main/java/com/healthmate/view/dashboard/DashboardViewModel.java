@@ -1,4 +1,4 @@
-package com.healthmate.ui.dashboard;
+package com.healthmate.view.dashboard;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
