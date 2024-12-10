@@ -37,10 +37,10 @@ public class Visita {
     @ColumnInfo(name = "luogo")
     private final String luogo;
 
-    @ColumnInfo(name = "paziente_id")
+    @ColumnInfo(name = "paziente_id", index = true)
     private final int pazienteId;
 
-    @ColumnInfo(name = "medico_id")
+    @ColumnInfo(name = "medico_id", index = true)
     private final int medico_id;
 
     public Visita(int id, Instant data, String luogo, int pazienteId, int medico_id) {

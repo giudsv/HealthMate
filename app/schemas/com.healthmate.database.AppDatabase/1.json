@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8856f13e826f9e0a35df1e3ba3c2f455",
+    "identityHash": "48184fdcef074c7b52f674d69f369191",
     "entities": [
       {
         "tableName": "Medico",
@@ -191,12 +191,98 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "Visita",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `data` TEXT, `luogo` TEXT, `paziente_id` INTEGER NOT NULL, `medico_id` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`paziente_id`) REFERENCES `Paziente`(`id`) ON UPDATE CASCADE ON DELETE SET NULL , FOREIGN KEY(`medico_id`) REFERENCES `Medico`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "data",
+            "columnName": "data",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "luogo",
+            "columnName": "luogo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "pazienteId",
+            "columnName": "paziente_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medico_id",
+            "columnName": "medico_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_Visita_paziente_id",
+            "unique": false,
+            "columnNames": [
+              "paziente_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Visita_paziente_id` ON `${TABLE_NAME}` (`paziente_id`)"
+          },
+          {
+            "name": "index_Visita_medico_id",
+            "unique": false,
+            "columnNames": [
+              "medico_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Visita_medico_id` ON `${TABLE_NAME}` (`medico_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Paziente",
+            "onDelete": "SET NULL",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "paziente_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "Medico",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "medico_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8856f13e826f9e0a35df1e3ba3c2f455')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '48184fdcef074c7b52f674d69f369191')"
     ]
   }
 }

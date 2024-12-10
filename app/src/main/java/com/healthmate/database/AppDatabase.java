@@ -9,6 +9,7 @@ import androidx.room.TypeConverters;
 
 import com.healthmate.database.bean.Medico;
 import com.healthmate.database.bean.Paziente;
+import com.healthmate.database.bean.Visita;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,12 +19,13 @@ import java.util.concurrent.Executors;
         version = 1,
         entities = {
                 Medico.class,
-                Paziente.class
+                Paziente.class,
+                Visita.class
         }
 )
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase INSTANCE = null;
-    private static final String DATABASE_NAME = "db-1.0.0";
+    private static final String DATABASE_NAME = "db-1.1.0";
     private final ExecutorService operationExecutor = Executors.newSingleThreadExecutor();
 
     public static synchronized AppDatabase getDatabase(Context context) {
