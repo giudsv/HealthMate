@@ -10,6 +10,7 @@ import androidx.room.TypeConverters;
 import com.healthmate.database.bean.Medico;
 import com.healthmate.database.bean.Paziente;
 import com.healthmate.database.bean.Visita;
+import com.healthmate.database.dao.PrenotazioneDAO;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -41,4 +42,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public final ExecutorService getOperationExecutor() {
         return operationExecutor;
     }
+
+    // DAO
+    public abstract PrenotazioneDAO prenotazioneDAO();
 }
