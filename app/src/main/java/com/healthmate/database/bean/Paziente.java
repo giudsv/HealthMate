@@ -24,7 +24,7 @@ public class Paziente extends Utente{
     @ColumnInfo(name = "email_tutore")
     private String emailTutore;
 
-    @ColumnInfo(name = "medico_id")
+    @ColumnInfo(name = "medico_id", index = true)
     private int medicoId;
 
     public String getSesso() {
