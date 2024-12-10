@@ -3,21 +3,25 @@ package com.healthmate.database.bean;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
 @Entity(
         foreignKeys = {
                 @ForeignKey(
-                        entity = Paziente.class,
+                        entity = CartellaClinica.class,
                         parentColumns = "id",
-                        childColumns = "paziente_id",
+                        childColumns = "cartellaclinica_id",
                         onDelete = ForeignKey.SET_NULL,
                         onUpdate = ForeignKey.CASCADE
                 )
         }
 )
 public class Referto {
+    @PrimaryKey
+    public int id;
+
     @ColumnInfo(name = "nome")
     private String nome;
 
@@ -27,8 +31,8 @@ public class Referto {
     @ColumnInfo(name = "allegato")
     private String allegato;
 
-    @ColumnInfo(name = "paziente_id")
-    private int pazienteId;
+    @ColumnInfo(name = "cartellaclinica_id")
+    private int cartellaclinica_id;
 
     public String getNome() {
         return nome;
