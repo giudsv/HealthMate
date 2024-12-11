@@ -12,17 +12,23 @@ import java.util.List;
 @Dao
 public interface CartellaClinicaDAO {
     @Insert
-    void insertAll(Referto...r);
+    void addReferto(Referto...r);
 
     @Delete
-    void delete(Referto referto);
+    void deleteReferto(Referto referto);
 
     @Query("SELECT * FROM referto")
-    List<Referto> getAll();
+    List<Referto> showReferti();
 
-    @Query("SELECT * FROM REFERTO WHERE paziente_id = :pazienteId")
+    @Query("SELECT r.id, r.nome, r.descrizione, r.allegato " +
+            "FROM REFERTO r Inner join CartellaClinica c ON " +
+            "c.id = r.cartellaclinica_id " +
+            "WHERE c.paziente_id = :pazienteId")
     List<Referto> getAllByPazienteId(int pazienteId);
 
-    @Query("SELECT * FROM REFERTO WHERE paziente_id = :pazienteId")
-    List<Referto> getAllByMedicoId(int pazienteId);
+    @Query("SELECT r.id, r.nome, r.descrizione, r.allegato " +
+            "FROM REFERTO r Inner join CartellaClinica c ON " +
+            " c.id = r.cartellaclinica_id " +
+            " WHERE c.medico_id = :medicoId ")
+    List<Referto> getAllByMedicoId(int medicoId);
 }

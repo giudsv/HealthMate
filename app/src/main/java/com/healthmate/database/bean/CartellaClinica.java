@@ -8,6 +8,7 @@ import com.healthmate.database.dao.CartellaClinicaDAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(
         foreignKeys = {
@@ -43,25 +44,67 @@ public class CartellaClinica {
     @ColumnInfo(name = "medico_id")
     private int medico_id;
 
-
-
-    private final CartellaClinicaDAO cartellaClinicaDAO;
-
-    public CartellaClinica(CartellaClinicaDAO cartellaClinicaDAO){
-        this.cartellaClinicaDAO = cartellaClinicaDAO;
+    public int getId() {
+        return id;
     }
 
-    public List<Referto> getAllReferti(){
-        List<Referto> referti = new ArrayList<>();
-        referti = cartellaClinicaDAO.getAll();
-        return referti;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void saveReferti(Referto r){
-        cartellaClinicaDAO.insertAll(r);
+    public int getNumReferti() {
+        return numReferti;
     }
 
-    public void deleteReferti(Referto r){
-        cartellaClinicaDAO.delete(r);
+    public void setNumReferti(int numReferti) {
+        this.numReferti = numReferti;
+    }
+
+    public int getSpazioDisponibile() {
+        return spazioDisponibile;
+    }
+
+    public void setSpazioDisponibile(int spazioDisponibile) {
+        this.spazioDisponibile = spazioDisponibile;
+    }
+
+    public int getPaziente_id() {
+        return paziente_id;
+    }
+
+    public void setPaziente_id(int paziente_id) {
+        this.paziente_id = paziente_id;
+    }
+
+    public int getMedico_id() {
+        return medico_id;
+    }
+
+    public void setMedico_id(int medico_id) {
+        this.medico_id = medico_id;
+    }
+
+    @Override
+    public String toString() {
+        return "CartellaClinica{" +
+                "id=" + id +
+                ", numReferti=" + numReferti +
+                ", spazioDisponibile=" + spazioDisponibile +
+                ", paziente_id=" + paziente_id +
+                ", medico_id=" + medico_id +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CartellaClinica that = (CartellaClinica) o;
+        return id == that.id && numReferti == that.numReferti && spazioDisponibile == that.spazioDisponibile && paziente_id == that.paziente_id && medico_id == that.medico_id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, numReferti, spazioDisponibile, paziente_id, medico_id);
     }
 }

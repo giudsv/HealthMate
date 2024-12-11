@@ -13,17 +13,29 @@ public class RefertoController {
         this.cartellaClinicaDAO = cartellaClinicaDAO;
     }
 
-    public List<Referto> getAllReferti(){
+    public List<Referto> showReferti(){
         List<Referto> referti = new ArrayList<>();
-        referti = cartellaClinicaDAO.getAll();
+        referti = cartellaClinicaDAO.showReferti();
         return referti;
     }
 
     public void saveReferti(Referto r){
-        cartellaClinicaDAO.insertAll(r);
+        cartellaClinicaDAO.addReferto(r);
     }
 
     public void deleteReferti(Referto r){
-        cartellaClinicaDAO.delete(r);
+        cartellaClinicaDAO.deleteReferto(r);
+    }
+
+    public List<Referto> getAllRefertoByPazienteId(int pazienteId){
+        List<Referto> refertiOfPaziente = new ArrayList<>();
+        refertiOfPaziente = cartellaClinicaDAO.getAllByPazienteId(pazienteId);
+        return refertiOfPaziente;
+    }
+
+    public List<Referto> getAllRefertoByMedicoId(int medicoId) {
+        List<Referto> refertiOfMedico = new ArrayList<>();
+        refertiOfMedico = cartellaClinicaDAO.getAllByMedicoId(medicoId);
+        return refertiOfMedico;
     }
 }
