@@ -2,6 +2,20 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+class RoomSchemaArgProvider(
+    @get:InputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    val schemaDir: File
+) : CommandLineArgumentProvider {
+
+    override fun asArguments(): Iterable<String> {
+        // Note: If you're using KAPT and javac, change the line below to
+        // return listOf("-Aroom.schemaLocation=${schemaDir.path}").
+        return listOf("-Aroom.schemaLocation=${schemaDir.path}")
+    }
+}
+
+
 android {
     namespace = "com.healthmate"
     compileSdk = 34
@@ -26,11 +40,21 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         viewBinding = true
+    }
+
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                compilerArgumentProviders(
+                    RoomSchemaArgProvider(File(projectDir, "schemas"))
+                )
+            }
+        }
     }
 }
 
