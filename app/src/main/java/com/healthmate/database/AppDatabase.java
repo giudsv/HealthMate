@@ -7,6 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.healthmate.AccountDAO;
 import com.healthmate.database.bean.Medico;
 import com.healthmate.database.bean.Paziente;
 
@@ -39,4 +40,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public final ExecutorService getOperationExecutor() {
         return operationExecutor;
     }
+
+    // DAO
+    public abstract AccountDAO accountDAO();
 }
