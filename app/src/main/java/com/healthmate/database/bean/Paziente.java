@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity(
@@ -26,6 +27,15 @@ public class Paziente extends Utente{
 
     @ColumnInfo(name = "medico_id", index = true)
     private int medicoId;
+
+    public Paziente(){}
+
+    public Paziente(int id, String nome, String cognome, String cf, Instant dataNascita, String cellulare, String email, String username, String password, String sesso, String emailTutore, int medicoId) {
+        super(id, nome, cognome, cf, dataNascita, cellulare, email, username, password);
+        this.sesso = sesso;
+        this.emailTutore = emailTutore;
+        this.medicoId = medicoId;
+    }
 
     public String getSesso() {
         return sesso;

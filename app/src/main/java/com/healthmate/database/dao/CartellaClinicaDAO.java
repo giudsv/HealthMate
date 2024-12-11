@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.healthmate.database.bean.CartellaClinica;
 import com.healthmate.database.bean.Referto;
 
 import java.util.List;
@@ -31,4 +32,7 @@ public interface CartellaClinicaDAO {
             " c.id = r.cartellaclinica_id " +
             " WHERE c.medico_id = :medicoId ")
     List<Referto> getAllByMedicoId(int medicoId);
+
+    @Insert
+    void addCartellaClinica(CartellaClinica...c);
 }

@@ -34,6 +34,16 @@ public class Referto {
     @ColumnInfo(name = "cartellaclinica_id")
     private int cartellaclinica_id;
 
+    public Referto(){}
+
+    public Referto(int id, String nome, String descrizione, String allegato, int cartellaclinica_id) {
+        this.id = id;
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.allegato = allegato;
+        this.cartellaclinica_id = cartellaclinica_id;
+    }
+
     public String getNome() {
         return nome;
     }

@@ -44,6 +44,16 @@ public class CartellaClinica {
     @ColumnInfo(name = "medico_id")
     private int medico_id;
 
+    public CartellaClinica(){}
+
+    public CartellaClinica(int id, int numReferti, int spazioDisponibile, int paziente_id, int medico_id) {
+        this.id = id;
+        this.numReferti = numReferti;
+        this.spazioDisponibile = spazioDisponibile;
+        this.paziente_id = paziente_id;
+        this.medico_id = medico_id;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,16 +1,25 @@
 package com.healthmate.controller;
 
+import com.healthmate.database.bean.CartellaClinica;
+import com.healthmate.database.bean.Medico;
+import com.healthmate.database.bean.Paziente;
 import com.healthmate.database.bean.Referto;
 import com.healthmate.database.dao.CartellaClinicaDAO;
+import com.healthmate.database.dao.MedicoDAO;
+import com.healthmate.database.dao.PazienteDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RefertoController {
     private final CartellaClinicaDAO cartellaClinicaDAO;
+    private final MedicoDAO medicoDAO;
+    private final PazienteDAO pazienteDAO;
 
-    public RefertoController(CartellaClinicaDAO cartellaClinicaDAO){
+    public RefertoController(CartellaClinicaDAO cartellaClinicaDAO, MedicoDAO medicoDAO, PazienteDAO pazienteDAO) {
         this.cartellaClinicaDAO = cartellaClinicaDAO;
+        this.medicoDAO = medicoDAO;
+        this.pazienteDAO = pazienteDAO;
     }
 
     public List<Referto> showReferti(){
@@ -38,4 +47,17 @@ public class RefertoController {
         refertiOfMedico = cartellaClinicaDAO.getAllByMedicoId(medicoId);
         return refertiOfMedico;
     }
+
+    public void saveCartellaClinica(CartellaClinica c){
+        cartellaClinicaDAO.addCartellaClinica(c);
+    }
+
+    public void saveMedico(Medico m){
+        medicoDAO.addMedico(m);
+    }
+
+    public void savePaziente(Paziente p){
+        pazienteDAO.addPaziente(p);
+    }
+
 }
