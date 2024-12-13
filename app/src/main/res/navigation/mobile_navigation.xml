@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_visite"
-        android:name="com.healthmate.view.notifications.NotificationsFragment"
+        android:name="com.healthmate.view.visite.RefertoFragment"
         android:label="Visite"
         tools:layout="@layout/fragment_visite" />
 </navigation>

@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.PrimaryKey;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.Objects;
 
 public abstract class Utente {

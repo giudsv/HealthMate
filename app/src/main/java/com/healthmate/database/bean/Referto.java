@@ -44,6 +44,14 @@ public class Referto {
         this.cartellaclinica_id = cartellaclinica_id;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -68,12 +76,22 @@ public class Referto {
         this.allegato = allegato;
     }
 
+    public int getCartellaclinica_id() {
+        return cartellaclinica_id;
+    }
+
+    public void setCartellaclinica_id(int cartellaclinica_id) {
+        this.cartellaclinica_id = cartellaclinica_id;
+    }
+
     @Override
     public String toString() {
         return "Referto{" +
-                "nome='" + nome + '\'' +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
                 ", descrizione='" + descrizione + '\'' +
                 ", allegato='" + allegato + '\'' +
+                ", cartellaclinica_id=" + cartellaclinica_id +
                 '}';
     }
 
@@ -81,12 +99,12 @@ public class Referto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Referto Referto = (Referto) o;
-        return Objects.equals(nome, Referto.nome) && Objects.equals(descrizione, Referto.descrizione) && Objects.equals(allegato, Referto.allegato);
+        Referto referto = (Referto) o;
+        return id == referto.id && cartellaclinica_id == referto.cartellaclinica_id && Objects.equals(nome, referto.nome) && Objects.equals(descrizione, referto.descrizione) && Objects.equals(allegato, referto.allegato);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nome, descrizione, allegato);
+        return Objects.hash(id, nome, descrizione, allegato, cartellaclinica_id);
     }
 }

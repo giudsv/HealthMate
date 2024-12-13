@@ -21,25 +21,17 @@ public class RefertoAdapter extends RecyclerView.Adapter<RefertoAdapter.RefertoV
     }
 
     @NonNull
-    public void RefertoViewHolder(@NonNull View itemView) {
-        TextView tvNome, tvDescrizione, tvAllegato;
-        tvNome = itemView.findViewById(R.id.tvNome);
-        tvDescrizione = itemView.findViewById(R.id.tvDescrizione);
-        tvAllegato = itemView.findViewById(R.id.tvAllegato);
-    }
-
-    @NonNull
     @Override
     public RefertoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_referto, parent, false);
+        return new RefertoViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RefertoViewHolder holder, int position) {
         Referto referto = referti.get(position);
-        holder.tvNome.setText(referto.getNome());
-        holder.tvDescrizione.setText(referto.getDescrizione());
-        holder.tvAllegato.setText(referto.getAllegato());
+        holder.bind(referto);
     }
 
     @Override
@@ -47,14 +39,22 @@ public class RefertoAdapter extends RecyclerView.Adapter<RefertoAdapter.RefertoV
         return referti.size();
     }
 
-    public static class RefertoViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNome, tvDescrizione, tvAllegato;
+    static class RefertoViewHolder extends RecyclerView.ViewHolder {
+        private TextView textViewNomeReferto;
+        private TextView textViewDescrizioneReferto;
+        private TextView textViewAllegatoReferto;
 
         public RefertoViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvNome = itemView.findViewById(R.id.tvNome);
-            tvDescrizione = itemView.findViewById(R.id.tvDescrizione);
-            tvAllegato = itemView.findViewById(R.id.tvAllegato);
+            textViewNomeReferto = itemView.findViewById(R.id.tvNome);
+            textViewDescrizioneReferto = itemView.findViewById(R.id.tvDescrizione);
+            textViewAllegatoReferto = itemView.findViewById(R.id.tvAllegato);
+        }
+
+        public void bind(Referto referto) {
+            textViewNomeReferto.setText(referto.getNome());
+            textViewDescrizioneReferto.setText(referto.getDescrizione());
+            textViewAllegatoReferto.setText(referto.getAllegato());
         }
     }
 }
