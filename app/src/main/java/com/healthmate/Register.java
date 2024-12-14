@@ -2,63 +2,57 @@ package com.healthmate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.healthmate.database.AppDatabase;
-import com.healthmate.database.bean.Utente;
-import com.healthmate.database.bean.Paziente;
-import com.healthmate.database.bean.Medico;
-import com.healthmate.AccountDAO;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import androidx.appcompat.app.AppCompatActivity;
-
-
-public class Register extends AppCompatActivity {
+public class Register extends Fragment {
 
     private RadioGroup userTypeRadioGroup;
     private LinearLayout patientLayout, doctorLayout;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registrazione);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_registrazione, container, false);
 
-        EditText NomeEditText = findViewById(R.id.NomeEditText);
-        EditText CognomeEditText = findViewById(R.id.CognomeEditText);
-        EditText NomeUtenteEditText = findViewById(R.id.NomeUtenteEditText);
-        EditText CfEditText = findViewById(R.id.CfEditText);
-        EditText DataNascitaEditText = findViewById(R.id.DataNascitaEditText);
-        EditText IndirizzoEditText = findViewById(R.id.IndirizzoEditText);
-        EditText MailEditText = findViewById(R.id.MailEditText);
-        EditText TelefonoEditText = findViewById(R.id.TelefonoEditText);
-        EditText passwordEditText = findViewById(R.id.passwordEditText);
-        EditText ConfermaPasswordEditText = findViewById(R.id.ConfermaPasswordEditText);
-        Button RegisterButton = findViewById(R.id.RegisterButton);
-        RadioButton maleRadioButton = findViewById(R.id.maleRadioButton);
-        RadioButton femaleRadioButton = findViewById(R.id.femaleRadioButton);
-        EditText tutoreEmailEditText = findViewById(R.id.tutoreEmailEditText);
-        EditText studioEditText = findViewById(R.id.studioEditText);
-        EditText numeroAlboEditText = findViewById(R.id.alboEditText);
-        RadioButton doctorRadioButton = findViewById(R.id.doctorRadioButton);
-        RadioButton patientRadioButton = findViewById(R.id.patientRadioButton);
-        userTypeRadioGroup = findViewById(R.id.userTypeRadioGroup);
-        patientLayout = findViewById(R.id.patientLayout);
-        doctorLayout = findViewById(R.id.doctorLayout);
+        EditText NomeEditText = view.findViewById(R.id.NomeEditText);
+        EditText CognomeEditText = view.findViewById(R.id.CognomeEditText);
+        EditText NomeUtenteEditText = view.findViewById(R.id.NomeUtenteEditText);
+        EditText CfEditText = view.findViewById(R.id.CfEditText);
+        EditText DataNascitaEditText = view.findViewById(R.id.DataNascitaEditText);
+        EditText IndirizzoEditText = view.findViewById(R.id.IndirizzoEditText);
+        EditText MailEditText = view.findViewById(R.id.MailEditText);
+        EditText TelefonoEditText = view.findViewById(R.id.TelefonoEditText);
+        EditText passwordEditText = view.findViewById(R.id.passwordEditText);
+        EditText ConfermaPasswordEditText = view.findViewById(R.id.ConfermaPasswordEditText);
+        Button RegisterButton = view.findViewById(R.id.RegisterButton);
+        RadioButton maleRadioButton = view.findViewById(R.id.maleRadioButton);
+        RadioButton femaleRadioButton = view.findViewById(R.id.femaleRadioButton);
+        EditText tutoreEmailEditText = view.findViewById(R.id.tutoreEmailEditText);
+        EditText studioEditText = view.findViewById(R.id.studioEditText);
+        EditText numeroAlboEditText = view.findViewById(R.id.alboEditText);
+        RadioButton doctorRadioButton = view.findViewById(R.id.doctorRadioButton);
+        RadioButton patientRadioButton = view.findViewById(R.id.patientRadioButton);
+        userTypeRadioGroup = view.findViewById(R.id.userTypeRadioGroup);
+        patientLayout = view.findViewById(R.id.patientLayout);
+        doctorLayout = view.findViewById(R.id.doctorLayout);
 
         // Imposta il listener per il RadioGroup
         userTypeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -77,12 +71,11 @@ public class Register extends AppCompatActivity {
             }
         });
 
-
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                AppDatabase db = AppDatabase.getDatabase(getApplicationContext());
+                AppDatabase db = AppDatabase.getDatabase(requireContext().getApplicationContext());
 
                 AccountDAO userDao = db.accountDAO();
 
@@ -93,7 +86,6 @@ public class Register extends AppCompatActivity {
                 String dataNascitaString = DataNascitaEditText.getText().toString();
                 LocalDate dataNascita = LocalDate.parse(dataNascitaString);
                 Instant dataNascitaInstant = dataNascita.atStartOfDay(ZoneId.systemDefault()).toInstant();
-                //Instant dataNascita = Instant.parse(DataNascitaEditText.getText().toString());
                 String Indirizzo = IndirizzoEditText.getText().toString();
                 String Mail = MailEditText.getText().toString();
                 String NumeroTelefono = TelefonoEditText.getText().toString();
@@ -112,11 +104,6 @@ public class Register extends AppCompatActivity {
                     SessoSelezionato = "";
                 }
 
-                /*
-                 * FIXME: Le operazioni sul database vanno eseguite su un Thread separato.
-                 *  Usare `db.getOperationExecutor().submit(() -> <Operazione da eseguire>)`.
-                 */
-
                 // Verifica se tutti i campi sono stati compilati
                 if (doctorRadioButton.isChecked()) {
                     if (name.isEmpty() || Cognome.isEmpty() || CF.isEmpty() || dataNascitaString.isEmpty() ||
@@ -124,104 +111,94 @@ public class Register extends AppCompatActivity {
                             username.isEmpty() || password.isEmpty() || ConfermaPassword.isEmpty() ||
                             emailTutore.isEmpty() || SessoSelezionato.isEmpty()) {
 
-                        Toast.makeText(Register.this, "Tutti i campi devono essere compilati!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Tutti i campi devono essere compilati!", Toast.LENGTH_SHORT).show();
                         return; // Interrompe l'esecuzione se i campi non sono completi
                     }
 
-// Verifica che il nome utente sia maggiore di 5 caratteri
                     if (username.length() <= 5) {
-                        Toast.makeText(Register.this, "Il nome utente deve essere maggiore di 5 caratteri!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Il nome utente deve essere maggiore di 5 caratteri!", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-// Verifica che il codice fiscale abbia esattamente 16 caratteri
                     if (CF.length() != 16) {
-                        Toast.makeText(Register.this, "Il codice fiscale deve essere di 16 caratteri!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Il codice fiscale deve essere di 16 caratteri!", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-// Verifica che la password sia maggiore di 8 caratteri
                     if (password.length() <= 8) {
-                        Toast.makeText(Register.this, "La password deve essere maggiore di 8 caratteri!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "La password deve essere maggiore di 8 caratteri!", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-// Verifica che la password e la conferma siano uguali
                     if (!password.equals(ConfermaPassword)) {
-                        Toast.makeText(Register.this, "La password e la conferma password devono coincidere!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "La password e la conferma password devono coincidere!", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
                     try {
                         db.getOperationExecutor().submit(() -> {
-                                userDao.insertPaziente(name, Cognome, CF, dataNascitaInstant,
+                            userDao.insertPaziente(name, Cognome, CF, dataNascitaInstant,
                                     NumeroTelefono, Mail, username, password, SessoSelezionato, emailTutore);
-                            v.post(() -> {
-                                // Autenticazione riuscita
-                                // Reindirizza l'utente alla schermata principale
-                                Intent intent = new Intent(Register.this, MainActivity.class);
+                            requireActivity().runOnUiThread(() -> {
+                                Intent intent = new Intent(requireContext(), MainActivity.class);
                                 startActivity(intent);
-                                finish();
+                                requireActivity().finish();
                             });
                         });
-                        Toast.makeText(Register.this, "Registrazione completata con successo!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Registrazione completata con successo!", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-                        Toast.makeText(Register.this, "Errore durante la registrazione: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(requireContext(), "Errore durante la registrazione: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
 
-                // Verifica se tutti i campi sono stati compilati
-                if(doctorRadioButton.isChecked()) {
+                if (doctorRadioButton.isChecked()) {
                     if (name.isEmpty() || Cognome.isEmpty() || CF.isEmpty() || dataNascitaString.isEmpty() ||
                             Indirizzo.isEmpty() || Mail.isEmpty() || NumeroTelefono.isEmpty() ||
                             username.isEmpty() || password.isEmpty() || ConfermaPassword.isEmpty() ||
                             studio.isEmpty() || numeroAlbo.isEmpty()) {
 
-                        Toast.makeText(Register.this, "Tutti i campi devono essere compilati!", Toast.LENGTH_SHORT).show();
-                        return; // Interrompe l'esecuzione se i campi non sono completi
+                        Toast.makeText(requireContext(), "Tutti i campi devono essere compilati!", Toast.LENGTH_SHORT).show();
+                        return;
                     }
 
-// Verifica che il nome utente sia maggiore di 5 caratteri
                     if (username.length() <= 5) {
-                        Toast.makeText(Register.this, "Il nome utente deve essere maggiore di 5 caratteri!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Il nome utente deve essere maggiore di 5 caratteri!", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-// Verifica che il codice fiscale abbia esattamente 16 caratteri
                     if (CF.length() != 16) {
-                        Toast.makeText(Register.this, "Il codice fiscale deve essere di 16 caratteri!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Il codice fiscale deve essere di 16 caratteri!", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-// Verifica che la password sia maggiore di 8 caratteri
                     if (password.length() <= 8) {
-                        Toast.makeText(Register.this, "La password deve essere maggiore di 8 caratteri!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "La password deve essere maggiore di 8 caratteri!", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-// Verifica che la password e la conferma siano uguali
                     if (!password.equals(ConfermaPassword)) {
-                        Toast.makeText(Register.this, "La password e la conferma password devono coincidere!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "La password e la conferma password devono coincidere!", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
                     try {
                         db.getOperationExecutor().submit(() -> {
-                                userDao.insertMedico(name, Cognome, CF, dataNascitaInstant,
+                            userDao.insertMedico(name, Cognome, CF, dataNascitaInstant,
                                     NumeroTelefono, Mail, username, password, SessoSelezionato, emailTutore);
-                            v.post(() -> {
-                                // Autenticazione riuscita
-                                // Reindirizza l'utente alla schermata principale
-                                Intent intent = new Intent(Register.this, MainActivity.class);
+                            requireActivity().runOnUiThread(() -> {
+                                Intent intent = new Intent(requireContext(), MainActivity.class);
                                 startActivity(intent);
-                                finish();
+                                requireActivity().finish();
                             });
                         });
-                        Toast.makeText(Register.this, "Registrazione completata con successo!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Registrazione completata con successo!", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-                        Toast.makeText(Register.this, "Errore durante la registrazione: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(requireContext(), "Errore durante la registrazione: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
         });
+
+        return view;
     }
 }
