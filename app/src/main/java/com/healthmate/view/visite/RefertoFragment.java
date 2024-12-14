@@ -14,14 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.healthmate.R;
 import com.healthmate.controller.RefertoAdapter;
 import com.healthmate.controller.RefertoController;
-import com.healthmate.database.AppDatabase;
 import com.healthmate.database.bean.Referto;
-import com.healthmate.database.dao.CartellaClinicaDAO;
-import com.healthmate.database.dao.MedicoDAO;
-import com.healthmate.database.dao.PazienteDAO;
 import com.healthmate.databinding.FragmentRefertiBinding;
 
 import java.util.ArrayList;
@@ -95,14 +90,14 @@ public class RefertoFragment extends Fragment
 
     @Override
     public void onRefertoUpdated(Referto referto) {
-
+        refertoViewModel.updateReferto(referto);
     }
 
     @Override
     public void onModificaReferto(Referto referto) {
-        // Implement the logic to modify a referto
-        // Could open a dialog to edit the referto, similar to AddRefertoDialogFragment
-        Toast.makeText(requireContext(), "Modificare referto: " + referto.getNome(), Toast.LENGTH_SHORT).show();
+        AddRefertoDialogFragment dialogFragment = AddRefertoDialogFragment.newInstance(referto);
+        dialogFragment.setTargetFragment(this, 0); // Per ricevere la callback
+        dialogFragment.show(getParentFragmentManager(), "EditRefertoDialog");
     }
 
     @Override

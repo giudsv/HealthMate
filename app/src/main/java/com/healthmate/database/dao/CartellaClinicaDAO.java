@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Dao
 public interface CartellaClinicaDAO {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addReferto(Referto...r);
 
     @Delete
@@ -40,7 +41,7 @@ public interface CartellaClinicaDAO {
     @Insert
     void addCartellaClinica(CartellaClinica...c);
 
-    @Query("Select count(id) from referto")
+    @Query("Select max(id) from referto")
     int lastId();
 }
 
