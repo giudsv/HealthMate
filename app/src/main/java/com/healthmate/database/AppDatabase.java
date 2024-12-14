@@ -7,13 +7,13 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.healthmate.AccountDAO;
 import com.healthmate.database.bean.CartellaClinica;
 import com.healthmate.database.bean.Medico;
 import com.healthmate.database.bean.Paziente;
 import com.healthmate.database.bean.Referto;
 import com.healthmate.database.bean.Visita;
 
+import com.healthmate.database.dao.AccountDAO;
 import com.healthmate.database.dao.CartellaClinicaDAO;
 import com.healthmate.database.dao.PrenotazioneDAO;
 
