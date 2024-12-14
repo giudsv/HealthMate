@@ -20,6 +20,75 @@ public class CartellaClinicaUnitTest {
         mockCartellaClinicaDAO = Mockito.mock(CartellaClinicaDAO.class);
     }
 
+    // UC_01_TC_01 - Modifica nome referto nella cartella clinica
+    @Test
+    public void testModificaNomeRefertoInCartellaClinica() {
+        CartellaClinica cartella = new CartellaClinica(1, 2, 100, 1, 1);
+        Referto referto = new Referto(1, "EsameSangue_2023.pdf", "Analisi dettagliate del sangue", "", cartella.getId());
+        referto.setNome("AnalisiSangue_Dicembre2023.pdf");
+
+        doNothing().when(mockCartellaClinicaDAO).updateReferto(referto);
+
+        mockCartellaClinicaDAO.updateReferto(referto);
+
+        verify(mockCartellaClinicaDAO, times(1)).updateReferto(referto);
+        assertEquals("AnalisiSangue_Dicembre2023.pdf", referto.getNome());
+    }
+
+    // UC_01_TC_02 - Modifica descrizione referto nella cartella clinica
+    @Test
+    public void testModificaDescrizioneRefertoInCartellaClinica() {
+        CartellaClinica cartella = new CartellaClinica(2, 2, 100, 1, 1);
+        Referto referto = new Referto(2, "EsameSangue_2023.pdf", "Analisi del sangue", "", cartella.getId());
+        referto.setDescrizione("Risultati aggiornati delle analisi del sangue per Dicembre 2023");
+
+        doNothing().when(mockCartellaClinicaDAO).updateReferto(referto);
+
+        mockCartellaClinicaDAO.updateReferto(referto);
+
+        verify(mockCartellaClinicaDAO, times(1)).updateReferto(referto);
+        assertEquals("Risultati aggiornati delle analisi del sangue per Dicembre 2023", referto.getDescrizione());
+    }
+
+    // UC_01_TC_03 - Modifica allegato referto nella cartella clinica
+    @Test
+    public void testModificaAllegatoRefertoInCartellaClinica() {
+        CartellaClinica cartella = new CartellaClinica(3, 2, 100, 1, 1);
+        Referto referto = new Referto(3, "EsameSangue_2023.pdf", "Analisi dettagliate del sangue", "Analisi_Confermate_2023.pdf", cartella.getId());
+        referto.setAllegato("Analisi_Confermate_2023.pdf");
+
+        doNothing().when(mockCartellaClinicaDAO).updateReferto(referto);
+
+        mockCartellaClinicaDAO.updateReferto(referto);
+
+        verify(mockCartellaClinicaDAO, times(1)).updateReferto(referto);
+        assertEquals("Analisi_Confermate_2023.pdf", referto.getAllegato());
+    }
+
+    // UC_01_TC_04 - Errore formato allegato (non è PDF o immagine)
+    @Test(expected = IllegalArgumentException.class)
+    public void testFormatoAllegatoNonValidoInCartellaClinica() {
+        CartellaClinica cartella = new CartellaClinica(4, 2, 100, 1, 1);
+        Referto referto = new Referto(4, "EsameSangue_2023.pdf", "Analisi del sangue", "Documento_eseguibile.exe", cartella.getId());
+
+        doThrow(new IllegalArgumentException("Il campo Allegato non è valido"))
+                .when(mockCartellaClinicaDAO).updateReferto(referto);
+
+        mockCartellaClinicaDAO.updateReferto(referto);
+    }
+
+    // UC_01_TC_05 - Nessun dato inserito nella cartella clinica
+    @Test(expected = IllegalArgumentException.class)
+    public void testNessunDatoInseritoInCartellaClinica() {
+        CartellaClinica cartella = new CartellaClinica(5, 2, 100, 1, 1);
+        Referto referto = new Referto(5, "", "", "", cartella.getId());
+
+        doThrow(new IllegalArgumentException("Nessun campo modificato"))
+                .when(mockCartellaClinicaDAO).updateReferto(referto);
+
+        mockCartellaClinicaDAO.updateReferto(referto);
+    }
+
     // UC_04_TC_01 - Inserimento referto nella cartella clinica
     @Test
     public void testInserimentoRefertoInCartellaClinica() {
