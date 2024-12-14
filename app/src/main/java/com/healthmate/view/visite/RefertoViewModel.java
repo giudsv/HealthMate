@@ -59,3 +59,4 @@ public class RefertoViewModel extends ViewModel {
         executorService.execute(() -> appDatabase.cartellaClinicaDAO().updateReferto(referto));
     }
 }
+

@@ -118,3 +118,4 @@ public class CartellaClinica {
         return Objects.hash(id, numReferti, spazioDisponibile, paziente_id, medico_id);
     }
 }
+

@@ -1,5 +1,6 @@
 package com.healthmate.database.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -23,8 +24,7 @@ public interface CartellaClinicaDAO {
     void updateReferto(Referto referto);
 
     @Query("SELECT * FROM referto")
-    List<Referto> showReferti();
-
+    LiveData<List<Referto>> showReferti();
     @Query("SELECT r.id, r.nome, r.descrizione, r.allegato, r.cartellaclinica_id " +
             "FROM REFERTO r Inner join CartellaClinica c ON " +
             "c.id = r.cartellaclinica_id " +
@@ -43,3 +43,4 @@ public interface CartellaClinicaDAO {
     @Query("Select count(id) from referto")
     int lastId();
 }
+

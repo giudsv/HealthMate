@@ -20,7 +20,7 @@ import com.healthmate.database.AppDatabase;
 import com.healthmate.database.bean.Referto;
 import com.healthmate.database.dao.CartellaClinicaDAO;
 
-import java.io.Serializable;
+import java.util.UUID;
 
 public class AddRefertoDialogFragment extends DialogFragment {
     private static final int PICK_PDF_JPEG = 1;
@@ -28,16 +28,37 @@ public class AddRefertoDialogFragment extends DialogFragment {
     private EditText editTextDescrizione;
     private Button buttonAllegato;
     private Uri selectedFileUri;
-
-    private CartellaClinicaDAO cartellaClinicaDAO;
+    private boolean isEditMode = false;
+    private Referto existingReferto;
 
     public interface AddRefertoListener {
         void onRefertoAdded(Referto referto);
+        void onRefertoUpdated(Referto referto);
+    }
+
+    // Factory method for creating a new referto
+    public static AddRefertoDialogFragment newInstance() {
+        return new AddRefertoDialogFragment();
+    }
+
+    // Factory method for editing an existing referto
+    public static AddRefertoDialogFragment newInstance(Referto referto) {
+        AddRefertoDialogFragment fragment = new AddRefertoDialogFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("referto", referto);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        // Check if we're editing an existing referto
+        if (getArguments() != null && getArguments().containsKey("referto")) {
+            existingReferto = (Referto) getArguments().getSerializable("referto");
+            isEditMode = true;
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
@@ -47,6 +68,13 @@ public class AddRefertoDialogFragment extends DialogFragment {
         editTextDescrizione = view.findViewById(R.id.editTextDescrizioneReferto);
         buttonAllegato = view.findViewById(R.id.buttonAllegato);
 
+        // If in edit mode, populate existing data
+        if (isEditMode && existingReferto != null) {
+            editTextNome.setText(existingReferto.getNome());
+            editTextDescrizione.setText(existingReferto.getDescrizione());
+            buttonAllegato.setText(existingReferto.getAllegato());
+        }
+
         buttonAllegato.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("application/pdf,image/jpeg");
@@ -54,8 +82,8 @@ public class AddRefertoDialogFragment extends DialogFragment {
         });
 
         builder.setView(view)
-                .setTitle("Aggiungi Nuovo Referto")
-                .setPositiveButton("Salva", (dialog, which) -> {
+                .setTitle(isEditMode ? "Modifica Referto" : "Aggiungi Nuovo Referto")
+                .setPositiveButton(isEditMode ? "Aggiorna" : "Salva", (dialog, which) -> {
                     if (validateInput()) {
                         salvaReferto();
                     }
@@ -79,39 +107,62 @@ public class AddRefertoDialogFragment extends DialogFragment {
             return false;
         }
 
-//        if (selectedFileUri == null) {
-//            Toast.makeText(getContext(), "Seleziona un allegato PDF o JPEG", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-
         return true;
     }
 
     private void salvaReferto() {
         String nome = editTextNome.getText().toString().trim();
         String descrizione = editTextDescrizione.getText().toString().trim();
-        String allegato = "shish.pdf";//selectedFileUri.toString();
+        String allegato = selectedFileUri != null
+                ? getFileNameFromUri(selectedFileUri)
+                : (isEditMode ? existingReferto.getAllegato() : generateDefaultFileName());
 
-
-
-        Referto nuovoReferto = new Referto();
-        nuovoReferto.setNome(nome);
-        nuovoReferto.setDescrizione(descrizione);
-        nuovoReferto.setAllegato(allegato);
-        nuovoReferto.setCartellaclinica_id(1);
+        Referto refertoToSave;
+        if (isEditMode) {
+            refertoToSave = existingReferto;
+            refertoToSave.setNome(nome);
+            refertoToSave.setDescrizione(descrizione);
+            refertoToSave.setAllegato(allegato);
+        } else {
+            refertoToSave = new Referto();
+            refertoToSave.setId(generateUniqueId());
+            refertoToSave.setNome(nome);
+            refertoToSave.setDescrizione(descrizione);
+            refertoToSave.setAllegato(allegato);
+            refertoToSave.setCartellaclinica_id(1); // Default cartellaClinica ID
+        }
 
         AppDatabase.getDatabase(requireContext()).getOperationExecutor().execute(() -> {
             CartellaClinicaDAO cartellaClinicaDAO = AppDatabase.getDatabase(requireContext()).cartellaClinicaDAO();
-//            cartellaClinicaDAO.addReferto(nuovoReferto);
-            System.out.println(cartellaClinicaDAO.showReferti());
+
+            if (isEditMode) {
+                cartellaClinicaDAO.updateReferto(refertoToSave);
+            } else {
+                cartellaClinicaDAO.addReferto(refertoToSave);
+            }
 
             requireActivity().runOnUiThread(() -> {
-                Bundle result = new Bundle();
-                result.putSerializable("referto", nuovoReferto);
-                getParentFragmentManager().setFragmentResult("refertoKey", result);
+                AddRefertoListener listener = (AddRefertoListener) getTargetFragment();
+                if (listener != null) {
+                    if (isEditMode) {
+                        listener.onRefertoUpdated(refertoToSave);
+                    } else {
+                        listener.onRefertoAdded(refertoToSave);
+                    }
+                }
                 dismiss();
             });
         });
+    }
+
+    private int generateUniqueId() {
+        // Generate a unique integer ID
+        return Math.abs(UUID.randomUUID().hashCode());
+    }
+
+    private String generateDefaultFileName() {
+        // Generate a default file name if no file is selected
+        return "Referto_" + System.currentTimeMillis() + ".pdf";
     }
 
     @Override
@@ -134,7 +185,7 @@ public class AddRefertoDialogFragment extends DialogFragment {
                     result = cursor.getString(cursor.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME));
                 }
             } finally {
-                cursor.close();
+                if (cursor != null) cursor.close();
             }
         }
         if (result == null) {

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.healthmate.R;
 import com.healthmate.controller.RefertoAdapter;
 import com.healthmate.controller.RefertoController;
@@ -27,100 +27,101 @@ import com.healthmate.databinding.FragmentRefertiBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RefertoFragment extends Fragment implements AddRefertoDialogFragment.AddRefertoListener {
+public class RefertoFragment extends Fragment
+        implements AddRefertoDialogFragment.AddRefertoListener,
+        RefertoAdapter.OnRefertoActionListener {
+
     private RecyclerView recyclerViewReferti;
     private RefertoAdapter refertoAdapter;
     private RefertoController refertoController;
     private List<Referto> referti = new ArrayList<>();
     private FragmentRefertiBinding binding;
-    private FloatingActionButton fabAddReferto;
+    private RefertoViewModel refertoViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Usa il binding invece di inflate manuale
         binding = FragmentRefertiBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        // Initialize ViewModel
+        RefertoViewModel.Factory factory = new RefertoViewModel.Factory(
+                (Application) requireContext().getApplicationContext()
+        );
+        refertoViewModel = new ViewModelProvider(this, factory).get(RefertoViewModel.class);
+
+        // Set up RecyclerView
+        setupRecyclerView();
+        // Set up ViewModel to observe referti data
+        setupViewModel();
+        // Set up Floating Action Button to add a new referto
+        setupFab();
+
+        return view;
+    }
+
+    private void setupRecyclerView() {
         recyclerViewReferti = binding.recyclerViewReferti;
         recyclerViewReferti.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
 
-        RecyclerView recyclerViewReferti = view.findViewById(R.id.recyclerViewReferti);
-        TextView textViewNoReferti = view.findViewById(R.id.textViewNoReferti);
-
-        RefertoViewModel.Factory factory = new RefertoViewModel.Factory((Application) requireContext().getApplicationContext());
-        RefertoViewModel refertoViewModel = new ViewModelProvider(this, factory).get(RefertoViewModel.class);
-
-        AppDatabase.getDatabase(requireContext()).getOperationExecutor().execute(() -> {
-            CartellaClinicaDAO cartellaClinicaDAO = AppDatabase.getDatabase(requireContext()).cartellaClinicaDAO();
-            MedicoDAO medicoDAO = AppDatabase.getDatabase(requireContext()).medicoDAO();
-            PazienteDAO pazienteDAO = AppDatabase.getDatabase(requireContext()).pazienteDAO();
-
-            refertoController = new RefertoController(cartellaClinicaDAO, medicoDAO, pazienteDAO);
-
-            referti = refertoController.showReferti();
-
-            // Aggiorna l'UI sul thread principale
-            requireActivity().runOnUiThread(() -> {
-                refertoAdapter = new RefertoAdapter(referti);
-                recyclerViewReferti.setAdapter(refertoAdapter);
-                System.out.println("recycler" + recyclerViewReferti.findViewById(R.id.tvNome));
+    private void setupViewModel() {
+        refertoViewModel.getReferti().observe(getViewLifecycleOwner(), refertiList -> {
+            referti = refertiList;
+            if (referti.isEmpty()) {
+                binding.textViewNoReferti.setVisibility(View.VISIBLE);
+                recyclerViewReferti.setVisibility(View.GONE);
+            } else {
+                binding.textViewNoReferti.setVisibility(View.GONE);
                 recyclerViewReferti.setVisibility(View.VISIBLE);
-            });
+
+                refertoAdapter = new RefertoAdapter(referti, refertoViewModel, this);
+                recyclerViewReferti.setAdapter(refertoAdapter);
+            }
         });
+    }
 
-//        if(referti.isEmpty()){
-//            textViewNoReferti.setVisibility(View.VISIBLE);
-//            recyclerViewReferti.setVisibility(View.GONE);
-//        } else {
-//            textViewNoReferti.setVisibility(View.GONE);
-//            recyclerViewReferti.setVisibility(View.VISIBLE);
-//
-//            refertoAdapter = new RefertoAdapter(referti);
-//            recyclerViewReferti.setAdapter(refertoAdapter);
-//            recyclerViewReferti.setLayoutManager(new LinearLayoutManager(requireContext()));
-//        }
-
-        // Usa il binding per trovare il FAB
-        fabAddReferto = binding.fabAddReferto;
-        fabAddReferto.setOnClickListener(v -> {
+    private void setupFab() {
+        binding.fabAddReferto.setOnClickListener(v -> {
             AddRefertoDialogFragment dialogFragment = new AddRefertoDialogFragment();
             dialogFragment.setTargetFragment(this, 0);
             dialogFragment.show(getParentFragmentManager(), "AddRefertoDialog");
         });
-        return view;
     }
 
+    @Override
     public void onRefertoAdded(Referto referto) {
-        // Aggiorna la lista dei referti
-        if (referti != null) {
-            referti.add(referto);
-            refertoAdapter.notifyItemInserted(referti.size() - 1);
-        } else {
-            // Se la lista Ã¨ vuota, ricarica tutti i referti
-            caricaReferti();
-        }
+        refertoViewModel.addReferto(referto);
     }
 
-    private void caricaReferti() {
-        AppDatabase.getDatabase(requireContext()).getOperationExecutor().execute(() -> {
-            CartellaClinicaDAO cartellaClinicaDAO = AppDatabase.getDatabase(requireContext()).cartellaClinicaDAO();
-            MedicoDAO medicoDAO = AppDatabase.getDatabase(requireContext()).medicoDAO();
-            PazienteDAO pazienteDAO = AppDatabase.getDatabase(requireContext()).pazienteDAO();
+    @Override
+    public void onRefertoUpdated(Referto referto) {
 
-            RefertoController refertoController = new RefertoController(cartellaClinicaDAO, medicoDAO, pazienteDAO);
-
-            referti = refertoController.showReferti();
-
-            requireActivity().runOnUiThread(() -> {
-                refertoAdapter = new RefertoAdapter(referti);
-                recyclerViewReferti.setAdapter(refertoAdapter);
-            });
-        });
     }
 
+    @Override
+    public void onModificaReferto(Referto referto) {
+        // Implement the logic to modify a referto
+        // Could open a dialog to edit the referto, similar to AddRefertoDialogFragment
+        Toast.makeText(requireContext(), "Modificare referto: " + referto.getNome(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onEliminaReferto(Referto referto) {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Elimina Referto")
+                .setMessage("Sei sicuro di voler eliminare questo referto?")
+                .setPositiveButton("Elimina", (dialog, which) -> {
+                    refertoViewModel.deleteReferto(referto);
+                    Toast.makeText(requireContext(), "Referto eliminato", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Annulla", null)
+                .show();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
-        // Importante: azzera il binding quando la view viene distrutta
+        // Cleanup to prevent memory leaks when the fragment's view is destroyed
         binding = null;
     }
 }

@@ -24,7 +24,7 @@ public class RefertoController {
 
     public List<Referto> showReferti(){
         List<Referto> referti = new ArrayList<>();
-        referti = cartellaClinicaDAO.showReferti();
+        referti = (List<Referto>) cartellaClinicaDAO.showReferti();
         return referti;
     }
 
@@ -61,3 +61,4 @@ public class RefertoController {
     }
 
 }
+
