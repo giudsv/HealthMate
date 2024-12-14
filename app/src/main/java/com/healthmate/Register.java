@@ -153,7 +153,7 @@ public class Register extends AppCompatActivity {
                     }
                     try {
                         db.getOperationExecutor().submit(() -> {
-                            Paziente paziente = userDao.insertPaziente(name, Cognome, CF, dataNascitaInstant,
+                                userDao.insertPaziente(name, Cognome, CF, dataNascitaInstant,
                                     NumeroTelefono, Mail, username, password, SessoSelezionato, emailTutore);
                             v.post(() -> {
                                 // Autenticazione riuscita
@@ -206,7 +206,7 @@ public class Register extends AppCompatActivity {
 
                     try {
                         db.getOperationExecutor().submit(() -> {
-                            Medico medico = userDao.insertMedico(name, Cognome, CF, dataNascitaInstant,
+                                userDao.insertMedico(name, Cognome, CF, dataNascitaInstant,
                                     NumeroTelefono, Mail, username, password, SessoSelezionato, emailTutore);
                             v.post(() -> {
                                 // Autenticazione riuscita
