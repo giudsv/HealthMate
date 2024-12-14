@@ -55,16 +55,12 @@ android {
                 )
             }
         }
-        vectorDrawables.useSupportLibrary = true
     }
 }
 
 dependencies {
     implementation(libs.room.common)
     val room_version = "2.6.1"
-
-    implementation("androidx.recyclerview:recyclerview:1.3.1")
-    implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
     implementation(libs.appcompat)
@@ -75,6 +71,7 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     testImplementation(libs.junit)
+    testImplementation(libs.mockito)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
