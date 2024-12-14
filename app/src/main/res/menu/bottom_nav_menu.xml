@@ -7,13 +7,13 @@
         android:title="Profilo" />
 
     <item
-        android:id="@+id/navigation_referti"
-        android:icon="@drawable/ic_referto_foreground"
+        android:icon="@drawable/ic_visite_foreground"
+        android:id="@+id/navigation_visite"
         android:title="Referti" />
 
     <item
-        android:id="@+id/navigation_visite"
-        android:icon="@drawable/ic_visite_foreground"
+        android:id="@+id/navigation_referti"
+        android:icon="@drawable/ic_referto_foreground"
         android:title="Visite" />
 
 </menu>

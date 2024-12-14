@@ -15,11 +15,11 @@
         android:id="@+id/navigation_referti"
         android:name="com.healthmate.view.dashboard.DashboardFragment"
         android:label="Referti"
-        tools:layout="@layout/fragment_referti" />
+        tools:layout="@layout/fragment_visite" />
 
     <fragment
         android:id="@+id/navigation_visite"
         android:name="com.healthmate.view.visite.RefertoFragment"
         android:label="Visite"
-        tools:layout="@layout/fragment_visite" />
+        tools:layout="@layout/fragment_referti" />
 </navigation>

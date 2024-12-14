@@ -39,4 +39,7 @@ public interface CartellaClinicaDAO {
 
     @Insert
     void addCartellaClinica(CartellaClinica...c);
+
+    @Query("Select count(id) from referto")
+    int lastId();
 }

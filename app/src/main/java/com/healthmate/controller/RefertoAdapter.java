@@ -57,4 +57,11 @@ public class RefertoAdapter extends RecyclerView.Adapter<RefertoAdapter.RefertoV
             textViewAllegatoReferto.setText(referto.getAllegato());
         }
     }
+    public List<Referto> getReferti() {
+        return referti;
+    }
+
+    public void setReferti(List<Referto> referti) {
+        this.referti = referti;
+    }
 }

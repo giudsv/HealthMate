@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity(
@@ -18,7 +19,7 @@ import java.util.Objects;
                 )
         }
 )
-public class Referto {
+public class Referto implements Serializable {
     @PrimaryKey
     public int id;
 
