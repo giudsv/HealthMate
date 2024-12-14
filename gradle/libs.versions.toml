@@ -25,7 +25,7 @@ lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-view
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
 room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
-mockito = {group = "org.mockito", name = "mockito:core", version.ref = "mockitoVersion"}
+mockito = {group = "org.mockito", name = "mockito-core", version.ref = "mockitoVersion"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
