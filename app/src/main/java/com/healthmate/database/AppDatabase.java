@@ -7,6 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.healthmate.AccountDAO;
 import com.healthmate.database.bean.CartellaClinica;
 import com.healthmate.database.bean.Medico;
 import com.healthmate.database.bean.Paziente;
@@ -32,7 +33,7 @@ import java.util.concurrent.Executors;
 )
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase INSTANCE = null;
-    private static final String DATABASE_NAME = "db-1.2.0";
+    private static final String DATABASE_NAME = "db-1.3.0";
     private final ExecutorService operationExecutor = Executors.newSingleThreadExecutor();
 
     public static synchronized AppDatabase getDatabase(Context context) {
@@ -52,4 +53,5 @@ public abstract class AppDatabase extends RoomDatabase {
     // DAO
     public abstract PrenotazioneDAO prenotazioneDAO();
     public abstract CartellaClinicaDAO cartellaClinicaDAO();
+    public abstract AccountDAO accountDAO();
 }
