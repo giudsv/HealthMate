@@ -59,9 +59,9 @@ android {
 }
 
 dependencies {
-    implementation(libs.room.common)
     val room_version = "2.6.1"
 
+    implementation(libs.room.common)
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
     implementation(libs.appcompat)
@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     testImplementation(libs.junit)
+    testImplementation(libs.mockito)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 }
