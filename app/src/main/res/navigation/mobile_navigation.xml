@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_referti">
+    app:startDestination="@+id/navigation_visite">
 
     <fragment
         android:id="@+id/navigation_profilo"
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_visite"
-        android:name="com.healthmate.view.notifications.NotificationsFragment"
+        android:name="com.healthmate.view.VisualizzaVisitaFragment"
         android:label="Visite"
-        tools:layout="@layout/fragment_visite" />
+        tools:layout="@layout/fragment_con_visita" />
 </navigation>

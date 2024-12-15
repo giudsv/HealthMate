@@ -26,13 +26,13 @@ import java.util.concurrent.Executors;
 )
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase INSTANCE = null;
-    private static final String DATABASE_NAME = "db-1.1.0";
+    private static final String DATABASE_NAME = "db-1.1.0.db3";
     private final ExecutorService operationExecutor = Executors.newSingleThreadExecutor();
 
     public static synchronized AppDatabase getDatabase(Context context) {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context, AppDatabase.class, DATABASE_NAME)
-                    //.createFromAsset(DATABASE_NAME)
+                    .createFromAsset("db-1.1.0.db3")
                     .build();
         }
 

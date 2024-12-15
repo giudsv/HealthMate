@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Data -->
+    <TextView
+        android:id="@+id/date_field_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data:"
+        android:textSize="22sp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/date_field_visita"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/date_field_visita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:text="2024-12-20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/date_field_name"
+        app:layout_constraintTop_toTopOf="@+id/date_field_name" />
+
+    <!-- Ora -->
+    <TextView
+        android:id="@+id/time_field_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ora:"
+        android:textSize="22sp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/time_field_visita"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/date_field_name" />
+
+    <TextView
+        android:id="@+id/time_field_visita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:text="11:00"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/time_field_name"
+        app:layout_constraintTop_toTopOf="@+id/time_field_name" />
+
+    <!-- Luogo -->
+    <TextView
+        android:id="@+id/location_field_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Luogo:"
+        android:textSize="22sp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/location_field_visita"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/time_field_name" />
+
+    <TextView
+        android:id="@+id/location_field_visita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:text="Studio Privato"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/location_field_name"
+        app:layout_constraintTop_toTopOf="@+id/location_field_name" />
+</androidx.constraintlayout.widget.ConstraintLayout>
