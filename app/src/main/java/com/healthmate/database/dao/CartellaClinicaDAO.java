@@ -43,5 +43,12 @@ public interface CartellaClinicaDAO {
 
     @Query("Select max(id) from referto")
     int lastId();
+
+    @Query("SELECT * FROM referto")
+    List<Referto> showRefertiforTesting();
+
+    @Query("SELECT id, nome, cartellaclinica_id FROM referto where nome = :nome")
+    Referto showRefertoWithName(String nome);
+
 }
 

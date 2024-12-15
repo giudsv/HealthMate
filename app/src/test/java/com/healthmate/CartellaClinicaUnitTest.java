@@ -11,6 +11,8 @@ import com.healthmate.database.bean.Referto;
 import com.healthmate.database.bean.CartellaClinica;
 import com.healthmate.database.dao.CartellaClinicaDAO;
 
+import java.util.List;
+
 public class CartellaClinicaUnitTest {
 
     private CartellaClinicaDAO mockCartellaClinicaDAO;
@@ -125,4 +127,88 @@ public class CartellaClinicaUnitTest {
         mockCartellaClinicaDAO.addReferto(referto);
     }
 
+    // UC_12_TC_01 - Elimina referto
+    @Test
+    public void testEliminaReferto() {
+        Referto referto = new Referto(9, "RefertoDaEliminare.pdf", "Analisi vecchie", "esame_vecchio.pdf", 1);
+
+        doNothing().when(mockCartellaClinicaDAO).deleteReferto(referto);
+        when(mockCartellaClinicaDAO.showRefertiforTesting()).thenReturn(List.of(referto));
+
+        mockCartellaClinicaDAO.deleteReferto(referto);
+
+        verify(mockCartellaClinicaDAO, times(1)).deleteReferto(referto);
+        assertTrue(mockCartellaClinicaDAO.showRefertoWithName("RefertoDaEliminare.pdf") == null);
+        System.out.println(mockCartellaClinicaDAO.showRefertoWithName("RefertoDaEliminare.pdf") == null);
+    }
+
+    // UC_12_TC_02 - Modifica nome referto
+    @Test
+    public void testModificaNomeRefertoMedico() {
+        Referto referto = new Referto(10, "EsameSangue_2023.pdf", "Analisi dettagliate del sangue", "", 1);
+        referto.setNome("AnalisiSangue_Ottobre2023.pdf");
+
+        doNothing().when(mockCartellaClinicaDAO).updateReferto(referto);
+        when(mockCartellaClinicaDAO.showRefertiforTesting()).thenReturn(List.of(referto));
+        mockCartellaClinicaDAO.updateReferto(referto);
+
+        Referto result = mockCartellaClinicaDAO.showRefertiforTesting().get(0);
+        assertEquals("AnalisiSangue_Ottobre2023.pdf", result.getNome());
+        verify(mockCartellaClinicaDAO, times(1)).updateReferto(referto);
+        verify(mockCartellaClinicaDAO, times(1)).showRefertiforTesting();
+    }
+
+    // UC_12_TC_03 - Modifica descrizione referto
+    @Test
+    public void testModificaDescrizioneRefertoMedico() {
+        Referto referto = new Referto(11, "EsameSangue_2023.pdf", "", "", 1);
+        referto.setDescrizione("Risultati aggiornati delle analisi del sangue per Dicembre 2023");
+
+        doNothing().when(mockCartellaClinicaDAO).updateReferto(referto);
+        when(mockCartellaClinicaDAO.showRefertiforTesting()).thenReturn(List.of(referto));
+
+        mockCartellaClinicaDAO.updateReferto(referto);
+
+        Referto result = mockCartellaClinicaDAO.showRefertiforTesting().get(0);
+        assertEquals("Risultati aggiornati delle analisi del sangue per Dicembre 2023", result.getDescrizione());
+        verify(mockCartellaClinicaDAO, times(1)).updateReferto(referto);
+        verify(mockCartellaClinicaDAO, times(1)).showRefertiforTesting();
+    }
+
+    // UC_12_TC_04 - Modifica allegato referto
+    @Test
+    public void testModificaAllegatoRefertoMedico() {
+        Referto referto = new Referto(12, "EsameSangue_2023.pdf", "Analisi confermate per Dicembre", "", 1);
+        referto.setAllegato("Analisi_Confermate_2023.pdf");
+
+        doNothing().when(mockCartellaClinicaDAO).updateReferto(referto);
+        when(mockCartellaClinicaDAO.showRefertiforTesting()).thenReturn(List.of(referto));
+
+        mockCartellaClinicaDAO.updateReferto(referto);
+
+        Referto result = mockCartellaClinicaDAO.showRefertiforTesting().get(0);
+        assertEquals("Analisi_Confermate_2023.pdf", result.getAllegato());
+        verify(mockCartellaClinicaDAO, times(1)).updateReferto(referto);
+        verify(mockCartellaClinicaDAO, times(1)).showRefertiforTesting();
+    }
+
+    // UC_12_TC_05 - Allegato non valido
+    @Test(expected = IllegalArgumentException.class)
+    public void testModificaAllegatoNonValidoMedico() {
+        Referto referto = new Referto(13, "EsameSangue_2023.pdf", "Analisi", "Documento_eseguibile.exe", 1);
+
+        doThrow(new IllegalArgumentException("Il campo Allegato non è valido.")).when(mockCartellaClinicaDAO).updateReferto(referto);
+
+        mockCartellaClinicaDAO.updateReferto(referto);
+    }
+
+    // UC_12_TC_06 - Campi vuoti
+    @Test(expected = IllegalArgumentException.class)
+    public void testModificaCampiVuotiMedico() {
+        Referto referto = new Referto(14, "", "", "", 1);
+
+        doThrow(new IllegalArgumentException("Almeno un campo deve essere compilato.")).when(mockCartellaClinicaDAO).updateReferto(referto);
+
+        mockCartellaClinicaDAO.updateReferto(referto);
+    }
 }

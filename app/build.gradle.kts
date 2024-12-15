@@ -55,14 +55,19 @@ android {
                 )
             }
         }
+        vectorDrawables.useSupportLibrary = true
     }
 }
 
 dependencies {
     implementation(libs.room.common)
     val room_version = "2.6.1"
+    implementation("androidx.recyclerview:recyclerview:1.3.1")
+    implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
+    androidTestImplementation("org.mockito:mockito-android:5.5.0")
+    testImplementation("org.mockito:mockito-core:5.5.0")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
