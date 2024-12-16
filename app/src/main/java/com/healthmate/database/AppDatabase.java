@@ -45,8 +45,8 @@ public abstract class AppDatabase extends RoomDatabase {
             INSTANCE = Room.databaseBuilder(context, AppDatabase.class, DATABASE_NAME)
                     .addCallback(new RoomDatabase.Callback() {
                         @Override
-                        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-                            super.onOpen(db);
+                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                            super.onCreate(db);
                             // Esegui il popolamento in un thread separato
                             Executors.newSingleThreadExecutor().execute(() -> {
                                 MedicoDAO medicoDAO = INSTANCE.medicoDAO();
