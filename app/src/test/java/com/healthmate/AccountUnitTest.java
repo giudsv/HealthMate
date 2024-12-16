@@ -29,24 +29,20 @@ public class AccountUnitTest {
         paziente.setUsername("mariorossi");
         paziente.setPassword("Passwordcorretta");
 
-        when(mockAccountDAO.getPaziente("mariorossi", "Passwordcorretta")).thenReturn(paziente);
+        when(mockAccountDAO.getPaziente("mariorossi", "Passwordcorretta")).thenReturn(true);
 
-        Paziente result = mockAccountDAO.getPaziente("mariorossi", "Passwordcorretta");
+        boolean result = mockAccountDAO.getPaziente("mariorossi", "Passwordcorretta");
 
-        assertNotNull(result);
-        assertEquals("mariorossi", result.getUsername());
-        assertEquals("Passwordcorretta", result.getPassword());
-        verify(mockAccountDAO, times(1)).getPaziente("mariorossi", "Passwordcorretta");
+        assertTrue(result);
     }
 
     @Test
     public void testLoginCredenzialiNonValide() {
-        when(mockAccountDAO.getPaziente("marirossi", "Passworderrata")).thenReturn(null);
+        when(mockAccountDAO.getPaziente("marirossi", "Passworderrata")).thenReturn(false);
 
-        Paziente result = mockAccountDAO.getPaziente("marirossi", "Passworderrata");
+        boolean result = mockAccountDAO.getPaziente("marirossi", "Passworderrata");
 
-        assertNull(result);
-        verify(mockAccountDAO, times(1)).getPaziente("marirossi", "Passworderrata");
+        assertFalse(result);
     }
 
     @Test(expected = IllegalArgumentException.class)

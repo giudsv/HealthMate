@@ -41,20 +41,19 @@ public class Login extends Fragment {
 
             // FIXME: Operazioni sul database su thread separato
             db.getOperationExecutor().submit(() -> {
-                String user = null;
-                System.out.println("esite coso: " + userDao.getPaziente("alamberti","niente123"));
+                boolean user = false;
                 try{
                     user = userDao.getPaziente(username, password);
-                    if (user == null) {
+                    if(!(user)) {
                         user = userDao.getMedico(username, password);
                     }
                 }catch(Exception e){
                     e.printStackTrace(System.err);
                 }
                 // Usa il thread principale per aggiornare l'UI
-                String finalUser = user;
+                boolean finalUser = user;
                 view.post(() -> {
-                    if (finalUser != null) {
+                    if (finalUser) {
                         // Autenticazione riuscita
                         Toast.makeText(requireContext(), "Autenticazione riuscita", Toast.LENGTH_SHORT).show();
                     } else {
