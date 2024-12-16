@@ -59,19 +59,22 @@ android {
 }
 
 dependencies {
-    implementation(libs.room.common)
-    val room_version = "2.6.1"
+    dependencies {
+        val room_version = "2.6.1"
 
-    implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.constraintlayout)
-    implementation(libs.lifecycle.livedata.ktx)
-    implementation(libs.lifecycle.viewmodel.ktx)
-    implementation(libs.navigation.fragment)
-    implementation(libs.navigation.ui)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+        implementation(libs.room.common)
+        implementation("androidx.room:room-runtime:$room_version")
+        annotationProcessor("androidx.room:room-compiler:$room_version")
+        implementation(libs.appcompat)
+        implementation(libs.material)
+        implementation(libs.constraintlayout)
+        implementation(libs.lifecycle.livedata.ktx)
+        implementation(libs.lifecycle.viewmodel.ktx)
+        implementation(libs.navigation.fragment)
+        implementation(libs.navigation.ui)
+        testImplementation(libs.junit)
+        testImplementation(libs.mockito)
+        androidTestImplementation(libs.ext.junit)
+        androidTestImplementation(libs.espresso.core)
+    }
 }

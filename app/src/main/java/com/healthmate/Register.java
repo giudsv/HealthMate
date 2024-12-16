@@ -27,11 +27,13 @@ public class Register extends Fragment {
     private RadioGroup userTypeRadioGroup;
     private LinearLayout patientLayout, doctorLayout;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_registrazione, container, false);
+    public Register() {
+        super(R.layout.activity_registrazione);
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         EditText NomeEditText = view.findViewById(R.id.NomeEditText);
         EditText CognomeEditText = view.findViewById(R.id.CognomeEditText);
         EditText NomeUtenteEditText = view.findViewById(R.id.NomeUtenteEditText);
@@ -105,7 +107,7 @@ public class Register extends Fragment {
                 }
 
                 // Verifica se tutti i campi sono stati compilati
-                if (doctorRadioButton.isChecked()) {
+                if (patientRadioButton.isChecked()) {
                     if (name.isEmpty() || Cognome.isEmpty() || CF.isEmpty() || dataNascitaString.isEmpty() ||
                             Indirizzo.isEmpty() || Mail.isEmpty() || NumeroTelefono.isEmpty() ||
                             username.isEmpty() || password.isEmpty() || ConfermaPassword.isEmpty() ||
@@ -198,7 +200,5 @@ public class Register extends Fragment {
                 }
             }
         });
-
-        return view;
     }
 }

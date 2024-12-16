@@ -3,12 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_registrazione">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.healthmate.view.home.HomeFragment"
-        android:label="@string/title_home"
+        android:id="@+id/navigation_registrazione"
+        android:name="com.healthmate.Register"
+        android:label="@string/title_registrazione"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.healthmate.Login"
+        android:label="@string/title_login"
         tools:layout="@layout/fragment_home" />
 
     <fragment

@@ -86,7 +86,7 @@
                 android:id="@+id/DataNascitaEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Data Di Nascita"
+                android:hint="Data Di Nascita(yy/mm/gg)"
                 android:inputType="date" />
 
             <EditText
