@@ -19,7 +19,13 @@
 
     <fragment
         android:id="@+id/navigation_visite"
-        android:name="com.healthmate.view.notifications.NotificationsFragment"
+        android:name="com.healthmate.view.VisualizzaVisitaFragment"
         android:label="Visite"
-        tools:layout="@layout/fragment_visite" />
+        tools:layout="@layout/fragment_con_visita" />
+
+    <fragment
+        android:id="@+id/navigation_prenotazione_visita"
+        android:name="com.healthmate.view.AggiungiVisitaFragment"
+        android:label="Visite"
+        tools:layout="@layout/fragment_aggiungi_visita" />
 </navigation>
