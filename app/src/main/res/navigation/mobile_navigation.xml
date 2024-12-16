@@ -6,9 +6,15 @@
     app:startDestination="@+id/navigation_referti">
 
     <fragment
-        android:id="@+id/navigation_profilo"
-        android:name="com.healthmate.view.home.HomeFragment"
-        android:label="Profilo"
+        android:id="@+id/navigation_registrazione"
+        android:name="com.healthmate.Register"
+        android:label="@string/title_registrazione"
+        tools:layout="@layout/fragment_profilo" />
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.healthmate.Login"
+        android:label="@string/title_login"
         tools:layout="@layout/fragment_profilo" />
 
     <fragment

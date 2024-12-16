@@ -10,11 +10,11 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.healthmate.database.bean.CartellaClinica;
+import com.healthmate.AccountDAO;
 import com.healthmate.database.bean.Medico;
 import com.healthmate.database.bean.Paziente;
 import com.healthmate.database.bean.Referto;
 import com.healthmate.database.bean.Visita;
-import com.healthmate.database.dao.AccountDAO;
 import com.healthmate.database.dao.CartellaClinicaDAO;
 import com.healthmate.database.dao.MedicoDAO;
 import com.healthmate.database.dao.PazienteDAO;
@@ -109,6 +109,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             });
                         }
                     })
+                    //.createFromAsset(DATABASE_NAME)
                     .build();
         }
 
