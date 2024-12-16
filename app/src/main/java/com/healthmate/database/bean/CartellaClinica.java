@@ -38,11 +38,13 @@ public class CartellaClinica {
     @ColumnInfo(name = "spazioDisponibile")
     private int spazioDisponibile;
 
-    @ColumnInfo(name = "paziente_id", index = true)
+    @ColumnInfo(name = "paziente_id")
     private int paziente_id;
 
-    @ColumnInfo(name = "medico_id", index = true)
+    @ColumnInfo(name = "medico_id")
     private int medico_id;
+
+    public CartellaClinica(){}
 
     public CartellaClinica(int id, int numReferti, int spazioDisponibile, int paziente_id, int medico_id) {
         this.id = id;
@@ -116,3 +118,4 @@ public class CartellaClinica {
         return Objects.hash(id, numReferti, spazioDisponibile, paziente_id, medico_id);
     }
 }
+

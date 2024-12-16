@@ -9,19 +9,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.healthmate.databinding.FragmentRefertiBinding;
+import com.healthmate.databinding.FragmentVisiteBinding;
 
 public class HomeFragment extends Fragment {
 
-    private FragmentRefertiBinding binding;
+    private FragmentVisiteBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
-        binding = FragmentRefertiBinding.inflate(inflater, container, false);
+        binding = FragmentVisiteBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textHome;

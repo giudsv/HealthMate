@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity(
@@ -18,7 +19,7 @@ import java.util.Objects;
                 )
         }
 )
-public class Referto {
+public class Referto implements Serializable {
     @PrimaryKey
     public int id;
 
@@ -31,8 +32,10 @@ public class Referto {
     @ColumnInfo(name = "allegato")
     private String allegato;
 
-    @ColumnInfo(name = "cartellaclinica_id", index = true)
+    @ColumnInfo(name = "cartellaclinica_id")
     private int cartellaclinica_id;
+
+    public Referto(){}
 
     public Referto(int id, String nome, String descrizione, String allegato, int cartellaclinica_id) {
         this.id = id;

@@ -29,3 +29,4 @@ mockito = {group = "org.mockito", name = "mockito-core", version.ref = "mockitoV
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+

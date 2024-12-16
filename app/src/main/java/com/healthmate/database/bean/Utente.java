@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.PrimaryKey;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.Objects;
 
 public abstract class Utente {
@@ -33,6 +34,20 @@ public abstract class Utente {
 
     @ColumnInfo(name = "password")
     private String password;
+
+    public Utente(){}
+
+    public Utente(int id, String nome, String cognome, String cf, Instant dataNascita, String cellulare, String email, String username, String password) {
+        this.id = id;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.cf = cf;
+        this.dataNascita = dataNascita;
+        this.cellulare = cellulare;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
 
     public int getId() {
         return id;

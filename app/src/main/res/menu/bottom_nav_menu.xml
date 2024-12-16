@@ -12,8 +12,8 @@
         android:title="Referti" />
 
     <item
-        android:id="@+id/navigation_visite"
         android:icon="@drawable/ic_visite_foreground"
+        android:id="@+id/navigation_visite"
         android:title="Visite" />
 
 </menu>
