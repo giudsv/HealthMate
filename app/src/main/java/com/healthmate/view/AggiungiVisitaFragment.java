@@ -91,7 +91,7 @@ public class AggiungiVisitaFragment extends Fragment {
 
             db.getOperationExecutor().submit(() -> {
                 db.prenotazioneDAO().insertPrenotazione(new Visita(
-                        -1,
+                        1,
                         date,
                         selectedLocation,
                         1,

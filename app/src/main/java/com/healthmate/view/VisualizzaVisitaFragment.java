@@ -45,13 +45,15 @@ public class VisualizzaVisitaFragment extends Fragment {
         db.getOperationExecutor().submit(() -> {
             Visita visita = db.prenotazioneDAO().queryVisitaPaziente(1);
 
-            view.post(() -> {
-                ZonedDateTime dataVisita = visita.getData().atZone(ZoneId.systemDefault());
+            if (visita != null) {
+                view.post(() -> {
+                    ZonedDateTime dataVisita = visita.getData().atZone(ZoneId.systemDefault());
 
-                dateField.setText(dataVisita.toLocalDate().toString());
-                timeField.setText(dataVisita.toLocalTime().toString());
-                locationField.setText(visita.getLuogo());
-            });
+                    dateField.setText(dataVisita.toLocalDate().toString());
+                    timeField.setText(dataVisita.toLocalTime().toString());
+                    locationField.setText(visita.getLuogo());
+                });
+            }
         });
 
         // FAB Configuration

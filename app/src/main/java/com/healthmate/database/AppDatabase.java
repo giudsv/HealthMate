@@ -97,15 +97,6 @@ public abstract class AppDatabase extends RoomDatabase {
 
                                 Referto r = new Referto(1,"Esame sangue","Esame sangue 11/12/2024","EsameSangue.pdf",1);
                                 cartellaClinicaDAO.addReferto(r);
-
-                                Visita v = new Visita(
-                                        1,
-                                        Instant.parse("1985-01-01T00:00:00Z"),
-                                        "Studio Medico",
-                                        1,
-                                        1
-                                );
-                                prenotazioneDAO.insertPrenotazione(v);
                             });
                         }
                     })
